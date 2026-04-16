@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  password       String
+  role           Role      @default(USER)
+  nexoraBalance  Float     @default(0)
+  isActive       Boolean   @default(true)
+  otp            String?
+  otpExpiresAt   DateTime?
+  otpVerified    Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  transactions   Transaction[]
+}
+model Transaction {
+  id          String            @id @default(cuid())
+  userId      String
+  user        User              @relation(fields: [userId], references: [id])
+  type        TransactionType
+  currency    Currency
+  amount      Float
+  nexoraAmount Float?
+  txHash      String?
+  walletAddress String?
+  status      TransactionStatus @default(PENDING)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model PriceHistory {
+  id        String   @id @default(cuid())
+  price     Float
+  createdAt DateTime @default(now())
+}
+
+model SiteSettings {
+  id            String  @id @default(cuid())
+  usdtWallet    String  @default("")
+  usdcWallet    String  @default("")
+  btcWallet     String  @default("")
+  totalSupply   Float   @default(0)
+  volume        Float   @default(0)
+  marketCap     Float   @default(0)
+  currentPrice  Float   @default(0)
+  promoActive   Boolean @default(false)
+  promoText     String  @default("")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+}
+
+enum Currency {
+  USDT
+  USDC
+  BTC
+}
+
+enum TransactionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
