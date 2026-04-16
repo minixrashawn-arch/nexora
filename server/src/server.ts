@@ -16,8 +16,12 @@ dotenv.config();
 
 const app = express();
 const PORT = parseInt(process.env.PORT as string, 10);
-const allowedOrigins = [process.env.FRONTEND_URL as string];
+const allowedOrigins = [
+  process.env.FRONTEND_URL as string,
+  process.env.FRONTEND_DEPLOYED_URL as string,
+];
 
+console.log(allowedOrigins);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
