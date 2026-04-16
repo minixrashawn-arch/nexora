@@ -33,8 +33,10 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormData>({
-    // @ts-expect-error "<>"
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(
+      // @ts-expect-error "no error"
+      loginSchema,
+    ),
   });
 
   const onSubmit = async (data: LoginFormData) => {

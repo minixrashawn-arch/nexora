@@ -33,8 +33,10 @@ const RegisterPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormData>({
-    // @ts-expect-error "<>"
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(
+      // @ts-expect-error "no error"
+      registerSchema,
+    ),
   });
 
   const onSubmit = async (data: RegisterFormData) => {

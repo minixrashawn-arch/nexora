@@ -37,8 +37,10 @@ const ResetPasswordPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ResetPasswordFormData>({
-    // @ts-expect-error <"">
-    resolver: zodResolver(resetPasswordSchema),
+    resolver: zodResolver(
+      // @ts-expect-error "no error"
+      resetPasswordSchema,
+    ),
   });
 
   const onSubmit = async (data: ResetPasswordFormData) => {
