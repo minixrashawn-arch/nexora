@@ -15,7 +15,7 @@ import { startHistoryCleanup } from "./utils/cleanupHistory";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT as string, 10);
 const allowedOrigins = [process.env.FRONTEND_URL as string];
 
 app.use(express.json());
@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Nexora API running" });
 });
 
-app.listen(PORT, async () => {
+app.listen(PORT, "0.0.0.0", async () => {
   console.log(`Server running on port ${PORT}`);
   await startPriceSimulator();
   startHistoryCleanup();
