@@ -34,7 +34,7 @@ const RegisterPage = () => {
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(
-      // @ts-expect-error "no error"
+      // @ts-ignore
       registerSchema,
     ),
   });

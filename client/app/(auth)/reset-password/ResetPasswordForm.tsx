@@ -38,7 +38,7 @@ const ResetPasswordPage = () => {
     formState: { errors },
   } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(
-      // @ts-expect-error "no error"
+      // @ts-ignore
       resetPasswordSchema,
     ),
   });

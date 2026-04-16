@@ -31,10 +31,8 @@ const ForgotPasswordPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ForgotPasswordFormData>({
-    resolver: zodResolver(
-      // @ts-expect-error "no error"
-      forgotPasswordSchema,
-    ),
+    // @ts-ignore
+    resolver: zodResolver(forgotPasswordSchema) as any,
   });
 
   const onSubmit = async (data: ForgotPasswordFormData) => {

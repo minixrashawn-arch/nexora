@@ -34,7 +34,7 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(
-      // @ts-expect-error "no error"
+      // @ts-ignore
       loginSchema,
     ),
   });
