@@ -89,6 +89,8 @@ export default function Home() {
 
   const pricePositive = (price?.change24h ?? 0) >= 0;
 
+  console.log(balance?.nexoraBalance);
+
   // Backup interval in case RTK polling misses
   useEffect(() => {
     const interval = setInterval(() => {
@@ -208,22 +210,57 @@ export default function Home() {
       </div>
 
       {/* ── Deposit / Withdraw Buttons ─────────────────────── */}
-      <div className="flex gap-3">
-        <Button
-          className="flex-1 sm:flex-none gap-2"
-          onClick={() => setDepositOpen(true)}
-        >
-          <ArrowDownCircleIcon className="size-4" />
-          Deposit Funds
-        </Button>
-        <Button
-          variant="outline"
-          className="flex-1 sm:flex-none gap-2"
-          onClick={() => setWithdrawOpen(true)}
-        >
-          <ArrowUpCircleIcon className="size-4" />
-          Withdraw Funds
-        </Button>
+      <div className="flex flex-col gap-3">
+        <div className="flex gap-3">
+          <Button
+            className="flex-1 sm:flex-none gap-2"
+            onClick={() => setDepositOpen(true)}
+          >
+            <ArrowDownCircleIcon className="size-4" />
+            Deposit Funds
+          </Button>
+
+          <Button
+            variant="outline"
+            className="flex-1 sm:flex-none gap-2"
+            onClick={() => {
+              if ((balance?.portfolioValue ?? 0) >= 1000) {
+                setWithdrawOpen(true);
+              }
+            }}
+            disabled={(balance?.portfolioValue ?? 0) < 1000}
+          >
+            <ArrowUpCircleIcon className="size-4" />
+            Withdraw Funds
+          </Button>
+        </div>
+
+        {/* Nudge — only shows when portfolio < $1000 */}
+        {!balanceLoading && (balance?.portfolioValue ?? 0) < 1000 && (
+          <div className="flex items-center gap-3 rounded-lg border border-yellow-200 bg-yellow-50 dark:bg-yellow-950 dark:border-yellow-800 p-3">
+            <ArrowUpCircleIcon className="size-4 text-yellow-600 dark:text-yellow-400 shrink-0" />
+            <div className="flex-1">
+              <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                <span className="font-semibold">
+                  Withdrawals require a minimum portfolio of $1,000.
+                </span>{" "}
+                Your current portfolio value is{" "}
+                <span className="font-semibold">
+                  ${balance?.portfolioValue?.toFixed(2) ?? "0.00"}
+                </span>
+                . Deposit more funds to unlock withdrawals.
+              </p>
+            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              className="shrink-0 text-yellow-700 border-yellow-300 hover:bg-yellow-100"
+              onClick={() => setDepositOpen(true)}
+            >
+              Deposit
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* ── Market Overview ────────────────────────────────── */}
