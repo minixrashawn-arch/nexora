@@ -40,31 +40,28 @@ const RegisterPage = () => {
   });
 
   const onSubmit = async (data: RegisterFormData) => {
-    try {
-      const res = await registerUser({
-        name: `${data.firstName} ${data.lastName}`,
-        email: data.email,
-        password: data.password,
-      }).unwrap();
-
-      dispatch(
-        setCredentials({
-          user: res.data.user,
-          accessToken: res.data.accessToken,
-        }),
-      );
-
-      toast.success("Account created successfully!");
-
-      // Same role check as login
-      if (res.data.user.role === "ADMIN") {
-        router.push("/admin/dashboard/home");
-      } else {
-        router.push("/user/dashboard/home");
-      }
-    } catch (error: any) {
-      toast.error(error?.data?.message || "Registration failed");
-    }
+    // try {
+    //   const res = await registerUser({
+    //     name: `${data.firstName} ${data.lastName}`,
+    //     email: data.email,
+    //     password: data.password,
+    //   }).unwrap();
+    //   dispatch(
+    //     setCredentials({
+    //       user: res.data.user,
+    //       accessToken: res.data.accessToken,
+    //     }),
+    //   );
+    //   toast.success("Account created successfully!");
+    //   // Same role check as login
+    //   if (res.data.user.role === "ADMIN") {
+    //     router.push("/admin/dashboard/home");
+    //   } else {
+    //     router.push("/user/dashboard/home");
+    //   }
+    // } catch (error: any) {
+    //   toast.error(error?.data?.message || "Registration failed");
+    // }
   };
 
   return (

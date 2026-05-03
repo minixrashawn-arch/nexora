@@ -40,24 +40,24 @@ const LoginPage = () => {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    try {
-      const res = await login(data).unwrap();
-      dispatch(
-        setCredentials({
-          user: res.data.user,
-          accessToken: res.data.accessToken,
-        }),
-      );
-      toast.success("Logged in successfully!");
-      // Redirect based on role
-      if (res.data.user.role === "ADMIN") {
-        router.push("/admin/dashboard/home");
-      } else {
-        router.push("/user/dashboard/home");
-      }
-    } catch (error: any) {
-      toast.error(error?.data?.message || "Login failed");
-    }
+    // try {
+    //   const res = await login(data).unwrap();
+    //   dispatch(
+    //     setCredentials({
+    //       user: res.data.user,
+    //       accessToken: res.data.accessToken,
+    //     }),
+    //   );
+    //   toast.success("Logged in successfully!");
+    //   // Redirect based on role
+    //   if (res.data.user.role === "ADMIN") {
+    //     router.push("/admin/dashboard/home");
+    //   } else {
+    //     router.push("/user/dashboard/home");
+    //   }
+    // } catch (error: any) {
+    //   toast.error(error?.data?.message || "Login failed");
+    // }
   };
 
   return (
